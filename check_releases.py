@@ -13,6 +13,10 @@ ADDITIONAL_REPOS = [
     {"owner": "lmcinnes", "repo_name": "glasbey"}
     ]
 
+REPOS_TO_IGNORE = [
+    {"owner": "TutteInstitute", "repo_name": "temporal-mapper"}
+]
+
 N_RELEASES = int(os.getenv("N_RELEASES", 5))
 # This is optional in case of rate limiting
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
@@ -163,6 +167,10 @@ def main():
     for repo in repos:
         result = check_repo(repo)
         repo_str = f"""{repo["owner"]}/{repo["repo_name"]}"""
+
+        if repo in REPOS_TO_IGNORE:
+            print(f"IGNORE  {repo_str} {result[2]}")
+            continue
 
         if result[0] == "OK":
             print(f"OK      {repo_str} ({result[2]})")
