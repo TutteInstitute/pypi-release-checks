@@ -12,7 +12,7 @@ schedules:
         - main
 
 stages:
-  - stage: Check releases
+  - stage: CheckReleases
     displayName: Check that Github releases make it to PyPI
     jobs:
       - job: run_platform_tests
