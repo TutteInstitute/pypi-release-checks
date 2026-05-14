@@ -32,11 +32,14 @@ stages:
 
         - script: |
             python -m pip install --upgrade pip
-            python -m pip install -U uv
+            python -m pip install -U uv        
+          displayName: 'Install dependencies'
+
+        - script: |
             uv run check_releases.py            
-          displayName: 'Install dependencies and run script'
-
-
+          displayName: 'Run script'
+          env:
+            GITHUB_TOKEN: $(RO_GITHUB_TOKEN)
 
 
 
