@@ -1,0 +1,29 @@
+name: Check releases
+on:
+  workflow_dispatch:
+  # Run nightly at 00:00
+  schedule:
+  - cron: 0 0 * * * 
+
+jobs:
+  RunAllTests-run_platform_tests:
+    runs-on:
+      - "${{ matrix.image-name }}"
+    strategy:
+      matrix:
+        image-name: [ubuntu-latest]
+        python-version: ["3.13"]
+    steps:
+    - name: checkout
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - name: Install uv and set python version to "${{ matrix.python-version }}"
+      uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      with:
+        python-version: "${{ matrix.python-version }}"
+    - name: Run script
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |-
+        uv run check_releases.py  
