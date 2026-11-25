@@ -135,6 +135,7 @@ def get_pypi_versions(package):
 
 
 def check_repo(repo):
+    repo_str = f"""{repo["owner"]}/{repo["repo_name"]}"""
     try:
         package = get_package_name(repo["owner"], repo["repo_name"])
 
@@ -146,7 +147,6 @@ def check_repo(repo):
 
         missing = [str(v) for v in gh_versions if v not in pypi_versions]
 
-        repo_str = f"""{repo["owner"]}/{repo["repo_name"]}"""
         if missing:
             return ("MISSING", repo_str, package, missing)
 
