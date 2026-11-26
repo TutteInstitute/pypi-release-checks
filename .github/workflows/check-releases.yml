@@ -6,7 +6,7 @@ on:
   - cron: 0 0 * * * 
 
 jobs:
-  RunAllTests-run_platform_tests:
+  CheckReleases:
     runs-on:
       - "${{ matrix.image-name }}"
     strategy:
@@ -27,3 +27,18 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |-
         uv run check_releases.py  
+
+  notify-github-team:
+    needs: CheckReleases
+    if: failure()
+    permissions:
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create failure issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "Workflow failed: ${{ github.workflow }}" \
+            --body "Attention @gclendenning — the run failed. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

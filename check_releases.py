@@ -185,8 +185,10 @@ def main():
             print(f"SKIP    {repo_str} {result[2]}")
 
         else:
-            failures = True
             print(f"ERROR   {repo_str} {result[2]}")
+
+    # Test failure notification for now
+    failures = True
 
     if failures:
         raise SystemExit(1)
@@ -194,3 +196,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
