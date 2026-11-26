@@ -187,9 +187,6 @@ def main():
         else:
             print(f"ERROR   {repo_str} {result[2]}")
 
-    # Test failure notification for now
-    failures = True
-
     if failures:
         raise SystemExit(1)
 
