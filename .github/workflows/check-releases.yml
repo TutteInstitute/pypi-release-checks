@@ -42,5 +42,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh issue create \
-            --title "Workflow failed: ${{ github.workflow }}" \
-            --body "Attention @gclendenning — the run failed. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            --title "PyPI release check warning" \
+            --body "@gclendenning - There is a mismatch between versions on a TutteInstitute Github release and the latest version on PyPI. Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
